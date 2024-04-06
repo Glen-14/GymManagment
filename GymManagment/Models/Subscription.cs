@@ -10,6 +10,6 @@
         public int TotalNumberOfSessions { get; set; }
         public int TotalPrice { get; set; }
         public bool IsDeleted { get; set; }
-        public ICollection<MemberSubscriptions> MemberSubscriptions { get; set; }
+        public ICollection<MemberSubscription>? MemberSubscriptions { get; set; }
     }
 }
