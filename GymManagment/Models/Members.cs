@@ -10,5 +10,7 @@
         public string Email { get; set; }
         public DateTime RegistrationDate { get; set; }
         public bool isDeleted { get; set; }
+        public ICollection<MemberSubscription>? MemberSubscriptions { get; set; }
+
     }
 }
