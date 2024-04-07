@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymManagment.Migrations
 {
     [DbContext(typeof(GymContext))]
-    [Migration("20240406120238_Initial")]
-    partial class Initial
+    [Migration("20240407122648_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,6 +93,9 @@ namespace GymManagment.Migrations
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("MembersID")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("OriginalPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -109,6 +112,8 @@ namespace GymManagment.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MembersID");
 
                     b.HasIndex("SubscriptionId");
 
@@ -191,11 +196,20 @@ namespace GymManagment.Migrations
 
             modelBuilder.Entity("GymManagment.Models.MemberSubscription", b =>
                 {
+                    b.HasOne("GymManagment.Models.Members", null)
+                        .WithMany("MemberSubscriptions")
+                        .HasForeignKey("MembersID");
+
                     b.HasOne("GymManagment.Models.Subscription", null)
                         .WithMany("MemberSubscriptions")
                         .HasForeignKey("SubscriptionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GymManagment.Models.Members", b =>
+                {
+                    b.Navigation("MemberSubscriptions");
                 });
 
             modelBuilder.Entity("GymManagment.Models.Subscription", b =>
