@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GymManagment.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -94,11 +94,17 @@ namespace GymManagment.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RemainingSessions = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    MembersID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MemberSubscriptions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MemberSubscriptions_Members_MembersID",
+                        column: x => x.MembersID,
+                        principalTable: "Members",
+                        principalColumn: "ID");
                     table.ForeignKey(
                         name: "FK_MemberSubscriptions_Subscriptions_SubscriptionId",
                         column: x => x.SubscriptionId,
@@ -106,6 +112,11 @@ namespace GymManagment.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MemberSubscriptions_MembersID",
+                table: "MemberSubscriptions",
+                column: "MembersID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MemberSubscriptions_SubscriptionId",
@@ -123,10 +134,10 @@ namespace GymManagment.Migrations
                 name: "Dsicounts");
 
             migrationBuilder.DropTable(
-                name: "Members");
+                name: "MemberSubscriptions");
 
             migrationBuilder.DropTable(
-                name: "MemberSubscriptions");
+                name: "Members");
 
             migrationBuilder.DropTable(
                 name: "Subscriptions");
