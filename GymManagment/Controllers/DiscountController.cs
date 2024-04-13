@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GymManagment.Controllers
 {
+    [ApiController]
+    [Route("api/Discount")]
     public class DiscountController : ControllerBase
     {
         private readonly DiscountsRepository _discountsRepository;
