@@ -19,7 +19,7 @@ namespace GymManagment.Repository
         {
             return _context.Subscriptions.ToList();
         }
-        private Subscription GetSubscriptionBy(int Code, string description, int numberOfMonths, int weekfrequency)
+        public  Subscription GetSubscriptionBy(int Code, string description, int numberOfMonths, int weekfrequency)
         {
             return _context.Subscriptions.Find(Code, description, numberOfMonths, weekfrequency);
         }
