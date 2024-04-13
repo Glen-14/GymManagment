@@ -13,6 +13,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<MembersRepository>();
+builder.Services.AddScoped<SubscriptionRepository>();
+builder.Services.AddScoped<MemberSubscripitonsRepository>();
+builder.Services.AddScoped<DiscountsRepository>();
+builder.Services.AddScoped<DiscountedMemberSubscriptionRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

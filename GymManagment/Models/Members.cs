@@ -11,6 +11,6 @@
         public DateTime RegistrationDate { get; set; }
         public bool isDeleted { get; set; }
         public ICollection<MemberSubscription>? MemberSubscriptions { get; set; }
-
+        
     }
 }
