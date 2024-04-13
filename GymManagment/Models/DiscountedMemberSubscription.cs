@@ -5,5 +5,6 @@
         public int ID { get; set; }
         public int MemberSubscriptionId { get; set; }
         public int DiscountId { get; set; }
+        public bool Isdeleted { get; set; }
     }
 }
