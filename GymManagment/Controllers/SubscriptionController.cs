@@ -36,8 +36,8 @@ namespace GymManagment.Controllers
             return Ok(subscriptions);
         }
 
-        [HttpGet("{ID}")]
-        public IActionResult GetSubscriptionBy(int Code, string description, int numberOfMonths, int weekfrequency)
+        [HttpGet("filtered")]
+        public IActionResult GetSubscriptionBy(string Code, string description, int numberOfMonths, string weekfrequency)
         {
             var subscriptions = _subscriptionRepository.GetSubscriptionBy(Code, description, numberOfMonths, weekfrequency);
             if (subscriptions == null)
@@ -46,16 +46,15 @@ namespace GymManagment.Controllers
             return Ok(subscriptions);
         }
 
-        [HttpPut("{ID}")]
-        public IActionResult UpdateSubscription(int Id, Subscription updatedSubscription)
+        [HttpPut("{id}")]
+        public ActionResult<Subscription> UpdateSubscription(int id, Subscription updatedSubscription)
         {
-            if (Id != updatedSubscription.Id)
+            if (id != updatedSubscription.Id)
                 return BadRequest("ID mismatch");
 
             try
             {
-                _subscriptionRepository.UpdateSubscription(updatedSubscription);
-                return NoContent();
+                return Ok (_subscriptionRepository.UpdateSubscription(updatedSubscription));
             }
             catch (Exception ex)
             {
@@ -63,11 +62,11 @@ namespace GymManagment.Controllers
             }
         }
         [HttpDelete("{ID}")]
-        public IActionResult SoftDeleteSubscription(int Id)
+        public IActionResult SoftDeleteSubscription(int ID)
         {
             try
             {
-                _subscriptionRepository.SoftDelete(Id);
+                _subscriptionRepository.SoftDelete(ID);
                 return NoContent();
             }
             catch (Exception ex)

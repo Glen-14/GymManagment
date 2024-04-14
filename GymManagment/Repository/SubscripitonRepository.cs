@@ -19,11 +19,16 @@ namespace GymManagment.Repository
         {
             return _context.Subscriptions.ToList();
         }
-        public  Subscription GetSubscriptionBy(int Code, string description, int numberOfMonths, int weekfrequency)
+        public  Subscription GetSubscriptionBy(string Code, string description, int numberOfMonths, string weekfrequency)
         {
-            return _context.Subscriptions.Find(Code, description, numberOfMonths, weekfrequency);
+            return _context.Subscriptions.FirstOrDefault
+           (s =>
+        s.Code == Code &&
+        s.Description == description &&
+        s.NumberOfMonths == numberOfMonths &&
+        s.WeekFrequency == weekfrequency);
         }
-        public void UpdateSubscription(Subscription subscription)
+        public Subscription UpdateSubscription(Subscription subscription)
         {
             if (subscription == null)
             {
@@ -34,16 +39,18 @@ namespace GymManagment.Repository
             {
                 throw new ArgumentNullException("Subscription was not found");
             }
+            existingSubscription.Description = subscription.Description;
             existingSubscription.NumberOfMonths = subscription.NumberOfMonths;
             existingSubscription.WeekFrequency = subscription.WeekFrequency;
             existingSubscription.TotalNumberOfSessions = subscription.TotalNumberOfSessions;
             existingSubscription.TotalPrice = subscription.TotalPrice;
             _context.SaveChanges();
+            return existingSubscription;
         }
         public void SoftDelete(int Id)
         {
-            var subscription = _context.Subscriptions.FirstOrDefault(sub => sub.Id == Id);
-            if (subscription != null)
+            var subscription = _context.Subscriptions.Where(i=> i.IsDeleted == false && i.Id == Id).FirstOrDefault();
+            if (subscription == null)
             {
                 throw new ArgumentException("Subscription not found.");
             }
