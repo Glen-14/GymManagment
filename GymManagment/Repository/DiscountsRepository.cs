@@ -28,7 +28,7 @@ namespace GymManagment.Repository
         {
             return _context.Dsicounts.ToList();
         }
-        public void Updatediscounts(Discounts discounts)
+        public Discounts Updatediscounts(Discounts discounts)
         {
             if (discounts == null)
             {
@@ -46,6 +46,7 @@ namespace GymManagment.Repository
             existingDiscounts.StartDate = discounts.StartDate;
 
             _context.SaveChanges();
+            return existingDiscounts;
         }
         public void SoftDeleteDiscounts(int ID)
         {

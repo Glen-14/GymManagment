@@ -16,7 +16,7 @@ namespace GymManagment.Repository
         }
         public void CreateMembers(Members newMembers)
         {
-            bool exists = _context.Members.Any(members => members.ID == newMembers.ID);
+            bool exists = _context.Members.Any(s => s.ID == newMembers.ID);
 
             if (exists)
             {

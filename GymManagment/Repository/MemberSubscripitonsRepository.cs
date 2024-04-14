@@ -19,7 +19,7 @@ namespace GymManagment.Repository
         {
             return _context.MemberSubscriptions.ToList();
         }
-        public void UpdateMemberSubscription(MemberSubscription memberSubscription)
+        public MemberSubscription UpdateMemberSubscription(MemberSubscription memberSubscription)
         {
             if (memberSubscription == null)
             {
@@ -37,11 +37,12 @@ namespace GymManagment.Repository
             existingMemberSubscription.EndDate = memberSubscription.EndDate;
             existingMemberSubscription.RemainingSessions = memberSubscription.RemainingSessions;
             _context.SaveChanges();
+            return existingMemberSubscription;
         }
         public void SoftDelete(int Id)
         {
             var memberSubscription = _context.MemberSubscriptions.FirstOrDefault(p => p.Id == Id);
-            if (memberSubscription != null)
+            if (memberSubscription == null)
             {
                 throw new ArgumentException(" not found.");
             }
